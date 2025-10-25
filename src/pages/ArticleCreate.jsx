@@ -394,7 +394,7 @@ export const ArticleCreate = () => {
             <div className="flex flex-col items-center justify-center h-48 text-indigo-600">
               <Loader2 className="w-10 h-10 animate-spin" />
               <p className="mt-4 text-lg font-medium">
-                Drafting the perfect post...
+                Creating your article...
               </p>
             </div>
           )}

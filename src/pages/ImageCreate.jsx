@@ -139,35 +139,31 @@ export const ImageCreate = () => {
               Generated Image
             </span>
           </h2>
-          {(generatedImage || isLoading) && (
-            <div className="relative aspect-square max-w-2xl mx-auto bg-white rounded-xl overflow-hidden shadow-lg">
-              {isLoading ? (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
-                    <p className="text-slate-600 font-medium">
-                      Creating your masterpiece...
-                    </p>
-                  </div>
-                </div>
-              ) : generatedImage ? (
-                <>
-                  <img
-                    src={generatedImage}
-                    alt="Generated"
-                    className="w-full h-full object-contain"
-                  />
-                  <button
-                    onClick={handleDownload}
-                    className="absolute bottom-4 right-4 bg-white text-slate-700 font-semibold py-3 px-5 rounded-lg hover:bg-slate-100 transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl"
-                  >
-                    <Download className="w-4 h-4" />
-                    <span>Download</span>
-                  </button>
-                </>
-              ) : null}
+
+          {isLoading && (
+            <div className="flex flex-col items-center justify-center h-48 text-indigo-600">
+              <Loader2 className="w-10 h-10 animate-spin" />
+              <p className="mt-4 text-lg font-medium">Creating your image...</p>
             </div>
           )}
+
+          {generatedImage ? (
+            <>
+              <img
+                src={generatedImage}
+                alt="Generated"
+                className="w-full h-full object-contain"
+              />
+              <button
+                onClick={handleDownload}
+                className="absolute bottom-4 right-4 bg-white text-slate-700 font-semibold py-3 px-5 rounded-lg hover:bg-slate-100 transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl"
+              >
+                <Download className="w-4 h-4" />
+                <span>Download</span>
+              </button>
+            </>
+          ) : null}
+
           {!isLoading && !generatedImage && !error && (
             <div className="text-center p-12 text-gray-400">
               <Sparkles className="w-12 h-12 mx-auto mb-3" />
