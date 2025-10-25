@@ -294,7 +294,7 @@ export const ArticleCreate = () => {
     <div className="min-h-screen sm:p-8 font-sans">
       <PageHeading
         h1={"AI Article Creator"}
-        p={"Generate high-quality, up-to-date blog drafts instantly."}
+        p={"Generate your article instantly."}
       />
 
       <div className="max-w-4xl mx-auto">
@@ -307,7 +307,7 @@ export const ArticleCreate = () => {
             htmlFor="topic"
             className="block text-sm font-medium text-gray-700 mb-2"
           >
-            Enter Blog Topic or Main Idea
+            Enter Article Topic or Main Idea
           </label>
           <div className="flex space-x-3">
             <input
@@ -322,7 +322,7 @@ export const ArticleCreate = () => {
             />
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || !topic.trim()}
               className="flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 shadow-md"
             >
               {isLoading ? (
@@ -352,7 +352,7 @@ export const ArticleCreate = () => {
           <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center justify-between">
             <span className="flex items-center">
               <Search className="w-5 h-5 text-gray-500 mr-2" />
-              Generated Content
+              Generated Article
             </span>
             {blogContent && ( // Only show mode selector if content exists
               <div className="flex space-x-2 text-sm">
@@ -483,10 +483,7 @@ export const ArticleCreate = () => {
           {!isLoading && !blogContent && !error && (
             <div className="text-center p-12 text-gray-400">
               <Sparkles className="w-12 h-12 mx-auto mb-3" />
-              <p>
-                Enter a topic above and click 'Generate' to create your blog
-                post.
-              </p>
+              <p>Your generated article goes here.</p>
             </div>
           )}
         </div>
