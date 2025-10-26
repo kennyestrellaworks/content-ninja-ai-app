@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 import { Sidebar } from "../components/Sidebar";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -11,6 +11,22 @@ export const RootLayout = () => {
   // Auto-show sidebar on tablet/desktop, hide on mobile
   const shouldShowSidebar = isTablet || isDesktop;
   const isSidebarVisible = sidebarOpen || shouldShowSidebar;
+
+  // Debug: Check environment variables
+  useEffect(() => {
+    console.log("=== ENVIRONMENT VARIABLES ===");
+    console.log("VITE_GEMINI_API_KEY:", import.meta.env.VITE_GEMINI_API_KEY);
+    console.log(
+      "VITE_GEMINI_API_KEY_IMAGE:",
+      import.meta.env.VITE_GEMINI_API_KEY_IMAGE
+    );
+    console.log(
+      "VITE_HUGGINGFACE_API_KEY:",
+      import.meta.env.VITE_HUGGINGFACE_API_KEY
+    );
+    console.log("All env vars:", import.meta.env);
+    console.log("=============================");
+  }, []);
 
   return (
     <div className="min-h-screen flex">
