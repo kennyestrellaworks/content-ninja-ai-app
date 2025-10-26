@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+src/layouts/RootLayout--1.jsx
+src/components/Sidebar--1.jsx

@@ -96,7 +96,7 @@ export const ImageCreate = () => {
           >
             Describe your Image
           </label>
-          <div className="flex space-x-3">
+          <div className="flex flex-col sm:flex-row sm:space-x-3 space-y-3 sm:space-y-0">
             <input
               id="prompt"
               value={prompt}
@@ -148,20 +148,20 @@ export const ImageCreate = () => {
           )}
 
           {generatedImage ? (
-            <>
+            <div className="relative">
               <img
                 src={generatedImage}
                 alt="Generated"
-                className="w-full h-full object-contain"
+                className="w-full h-auto object-contain rounded-lg"
               />
               <button
                 onClick={handleDownload}
-                className="absolute bottom-4 right-4 bg-white text-slate-700 font-semibold py-3 px-5 rounded-lg hover:bg-slate-100 transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl"
+                className="absolute bottom-4 right-4 bg-white text-slate-700 font-semibold py-2 px-4 rounded-lg hover:bg-slate-100 transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl"
               >
                 <Download className="w-4 h-4" />
                 <span>Download</span>
               </button>
-            </>
+            </div>
           ) : null}
 
           {!isLoading && !generatedImage && !error && (
