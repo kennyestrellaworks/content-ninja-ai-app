@@ -12,22 +12,6 @@ export const RootLayout = () => {
   const shouldShowSidebar = isTablet || isDesktop;
   const isSidebarVisible = sidebarOpen || shouldShowSidebar;
 
-  // Debug: Check environment variables
-  useEffect(() => {
-    console.log("=== ENVIRONMENT VARIABLES ===");
-    console.log("VITE_GEMINI_API_KEY:", import.meta.env.VITE_GEMINI_API_KEY);
-    console.log(
-      "VITE_GEMINI_API_KEY_IMAGE:",
-      import.meta.env.VITE_GEMINI_API_KEY_IMAGE
-    );
-    console.log(
-      "VITE_HUGGINGFACE_API_KEY:",
-      import.meta.env.VITE_HUGGINGFACE_API_KEY
-    );
-    console.log("All env vars:", import.meta.env);
-    console.log("=============================");
-  }, []);
-
   return (
     <div className="min-h-screen flex">
       {/* Sidebar */}
