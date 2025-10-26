@@ -309,7 +309,7 @@ export const ArticleCreate = () => {
           >
             Enter Article Topic or Main Idea
           </label>
-          <div className="flex space-x-3">
+          <div className="flex flex-col sm:flex-row sm:space-x-3 space-y-3 sm:space-y-0">
             <input
               id="topic"
               type="text"
@@ -403,7 +403,7 @@ export const ArticleCreate = () => {
             <>
               {/* RAW HTML EDIT MODE */}
               {editMode === "edit-html" && (
-                <div className="p-4 bg-gray-900 border-2 border-gray-700 rounded-lg shadow-inner min-h-[500px]">
+                <div className="p-4 bg-gray-900 border-2 border-gray-700 rounded-lg shadow-inner min-h-[300px] md:min-h-[500px]">
                   <p className="text-xs text-yellow-400 font-semibold mb-2">
                     Editing Raw HTML. Ensure your tags are well-formed before
                     saving.
@@ -427,7 +427,7 @@ export const ArticleCreate = () => {
                     <textarea
                       value={editingSource}
                       onChange={(e) => setEditingSource(e.target.value)}
-                      className="w-full min-h-[500px] p-4 border-2 border-indigo-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 font-sans text-base text-gray-800 bg-gray-50 resize-y transition duration-150 shadow-inner"
+                      className="w-full min-h-[250px] md:min-h-[500px] p-4 border-2 border-indigo-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 font-sans text-base text-gray-800 bg-gray-50 resize-y transition duration-150 shadow-inner"
                       placeholder="Edit your plain text content here..."
                     />
                   </div>
@@ -436,7 +436,7 @@ export const ArticleCreate = () => {
                     <h3 className="text-lg font-semibold text-gray-700 mb-2">
                       Live Preview
                     </h3>
-                    <div className="p-4 bg-gray-50 border border-gray-300 rounded-lg shadow-inner min-h-[500px]">
+                    <div className="p-4 bg-gray-50 border border-gray-300 rounded-lg shadow-inner min-h-[250px] md:min-h-[500px]">
                       {/* Use the plainTextToHtml helper to render the current source */}
                       <ContentRenderer
                         content={plainTextToHtml(editingSource)}

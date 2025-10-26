@@ -76,7 +76,7 @@ export const VideoCreate = () => {
             Enter your prompt
           </label>
 
-          <div className="flex space-x-3">
+          <div className="flex flex-col sm:flex-row sm:space-x-3 space-y-3 sm:space-y-0">
             <input
               id="prompt"
               value={prompt}

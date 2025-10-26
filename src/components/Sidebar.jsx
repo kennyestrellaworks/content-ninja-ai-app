@@ -1,22 +1,61 @@
-import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useEffect } from "react";
 import { navigation } from "../system";
+import { Link, NavLink } from "react-router-dom";
 import boyNinja from "../assets/boy-ninja.png";
+import { IoCloseSharp } from "react-icons/io5";
 
-export const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export const Sidebar = ({
+  isVisible,
+  onClose,
+  isMobile,
+  isTablet,
+  setIsOpen = () => {},
+}) => {
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    if (isMobile && isVisible) {
+      document.addEventListener("keydown", handleEscape);
+      return () => document.removeEventListener("keydown", handleEscape);
+    }
+  }, [isVisible, isMobile, onClose]);
+
+  // Don't render if not visible on mobile
+  if (isMobile && !isVisible) return null;
+
+  const handleNavClick = () => {
+    if (isMobile) {
+      onClose();
+      setIsOpen(false);
+    }
+  };
 
   return (
-    <div
-      className={`fixed top-0 left-0 z-40 w-64 bg-white/80 backdrop-blur-xl border-r border-white/20 shadow-2xl transform transition-transform duration-300 ease-in-out ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      } md:translate-x-0 flex h-full`}
+    <aside
+      className={`
+      bg-white/80 backdrop-blur-xl border-r border-white/20 shadow-2xl transition-all duration-300 ease-in-out
+      ${
+        isMobile
+          ? `fixed top-0 left-0 h-full z-30 transform ${
+              isVisible ? "translate-x-0" : "-translate-x-full"
+            } w-64`
+          : isTablet
+          ? "w-48 min-w-[12rem]"
+          : "w-64 min-w-[16rem]"
+      }
+    `}
     >
       <div className="flex flex-col h-full">
-        <div className="flex items-center h-20 px-6 border-b border-gray-100/50">
+        {/* Header Section */}
+        <div className="flex items-center justify-between h-20 px-4 sm:px-6 border-b border-gray-100/50">
+          {/* Logo and Brand */}
           <div className="flex items-center">
-            <div className="w-10 h-10 bg-gradient-to-r from-violet-600 via-purple-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-              <Link to="/">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden">
+              <Link to="/" onClick={isMobile ? handleNavClick : undefined}>
                 <img src={boyNinja} alt="Boy Ninja Master of Content" />
               </Link>
             </div>
@@ -26,13 +65,29 @@ export const Sidebar = () => {
               </span>
             </div>
           </div>
+
+          {/* Close button on mobile - positioned on the right */}
+          {isMobile && (
+            <button
+              onClick={() => {
+                onClose();
+                setIsOpen(false);
+              }}
+              aria-label="Close sidebar"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 cursor-pointer transition-colors"
+            >
+              <IoCloseSharp className="w-5 h-5" />
+            </button>
+          )}
         </div>
-        <nav className="flex-1 px-4 py-8 space-y-2">
+
+        {/* Sidebar content */}
+        <nav className="flex-1 px-4 py-6 sm:py-8 space-y-2 overflow-y-auto">
           {navigation.map((item) => (
             <NavLink
               key={item.name}
               to={item.href}
-              onClick={() => setIsOpen(false)} // Close sidebar on mobile when navigating
+              onClick={handleNavClick}
               className={({ isActive }) =>
                 `group flex items-center px-4 py-3.5 text-sm font-medium rounded-xl transition-all duration-300 ${
                   isActive
@@ -47,6 +102,6 @@ export const Sidebar = () => {
           ))}
         </nav>
       </div>
-    </div>
+    </aside>
   );
 };
