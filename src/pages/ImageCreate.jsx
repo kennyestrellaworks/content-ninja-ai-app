@@ -188,8 +188,18 @@ export const ImageCreate = () => {
             <div className="text-center p-12 text-gray-400">
               <Sparkles className="w-12 h-12 mx-auto mb-3" />
               <p>Your generated image will appear here.</p>
+              <p className="text-sm mt-2">Powered by FLUX-Unlimited</p>
             </div>
           )}
+        </div>
+
+        <div className="mt-6 p-4 bg-gray-50 rounded-lg text-sm text-gray-600">
+          <h3 className="font-semibold mb-2">About FLUX-Unlimited</h3>
+          <p>
+            FLUX-Unlimited is a high-resolution image generation model that
+            creates stunning 1024x1024 images with exceptional detail and
+            quality, typically generating results in 30-60 seconds.
+          </p>
         </div>
       </div>
     </div>
