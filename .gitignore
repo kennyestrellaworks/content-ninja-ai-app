@@ -25,3 +25,5 @@ dist-ssr
 
 src/layouts/RootLayout--1.jsx
 src/components/Sidebar--1.jsx
+src/pages/VideoCreate-1.jsx
+src/api/gradioApi-1.js

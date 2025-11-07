@@ -1,38 +1,40 @@
 import { useState } from "react";
-import { generateInstantVideo } from "../api/gradioApi";
+import {
+  generateZeroscopeVideo,
+  generateZeroscopeVideoAdvanced,
+} from "../api/gradioApi";
 import { PageHeading } from "../components/PageHeading";
 import {
   FiStar as Sparkles,
-  FiZap as Wand2,
   FiLoader as Loader2,
   FiSearch as Search,
-  FiZap as Zap,
-  FiCode as Code,
-  FiFileText as FileText,
   FiDownload as Download,
 } from "react-icons/fi";
 
 export const VideoCreate = () => {
   const [prompt, setPrompt] = useState("");
   const [generatedVideo, setGeneratedVideo] = useState(null);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!prompt.trim()) return;
 
-    setLoading(true);
+    setIsLoading(true);
     setError(null);
     setGeneratedVideo(null);
 
     try {
-      console.log("Attempting to generate instant video...");
-      const videoUrl = await generateInstantVideo(prompt);
+      console.log("Attempting to generate video with Zeroscope...");
+      const result = await generateZeroscopeVideo(prompt);
 
-      if (videoUrl) {
-        console.log("Video URL received:", videoUrl);
-        setGeneratedVideo(videoUrl);
+      console.log("Raw result from API:", result);
+
+      // The API should return the URL directly now
+      if (result) {
+        console.log("Video URL received:", result);
+        setGeneratedVideo(result);
       } else {
         setError("Video was generated but no URL was returned.");
       }
@@ -40,19 +42,46 @@ export const VideoCreate = () => {
       console.error("Generation error:", err);
       setError(err.message);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
+    }
+  };
+
+  const tryAdvanced = async () => {
+    if (!prompt.trim()) return;
+
+    setIsLoading(true);
+    setError(null);
+    setGeneratedVideo(null);
+
+    try {
+      console.log("Trying advanced Zeroscope parameters...");
+      const result = await generateZeroscopeVideoAdvanced(prompt);
+
+      console.log("Raw result from advanced API:", result);
+
+      if (result) {
+        console.log("Advanced video URL received:", result);
+        setGeneratedVideo(result);
+      } else {
+        setError("Advanced method also failed to return a video URL.");
+      }
+    } catch (err) {
+      console.error("Advanced generation error:", err);
+      setError(`Advanced method failed: ${err.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const useExamplePrompt = () => {
-    setPrompt("A beautiful sunset over mountains");
+    setPrompt("A beautiful sunset over mountains with flowing clouds");
   };
 
   return (
     <div className="min-h-screen sm:p-8 font-sans">
       <PageHeading
         h1={"AI Video Creator"}
-        p={"Generate videos instantly using SahaniJi/Instant-Video Space"}
+        p={"Generate videos using hysts/zeroscope-v2"}
       />
 
       <div className="max-w-4xl mx-auto">
@@ -81,7 +110,7 @@ export const VideoCreate = () => {
               id="prompt"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              placeholder="A beautiful moonlight over the sea"
+              placeholder="A beautiful moonlight over the sea with waves crashing"
               className="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 shadow-sm"
               disabled={isLoading}
             />
@@ -102,12 +131,15 @@ export const VideoCreate = () => {
 
         {/* Loading and Error Display */}
         {error && (
-          <div
-            className={`p-4 mb-6 rounded-lg bg-red-100 border border-red-400 text-red-700`}
-            role="alert"
-          >
+          <div className="p-4 mb-6 rounded-lg bg-red-100 border border-red-400 text-red-700">
             <p className="font-bold">Error:</p>
             <p>{error}</p>
+            <button
+              onClick={tryAdvanced}
+              className="mt-2 text-sm text-blue-600 hover:text-blue-800 underline"
+            >
+              Try with advanced parameters
+            </button>
           </div>
         )}
 
@@ -124,6 +156,9 @@ export const VideoCreate = () => {
             <div className="flex flex-col items-center justify-center h-48 text-indigo-600">
               <Loader2 className="w-10 h-10 animate-spin" />
               <p className="mt-4 text-lg font-medium">Creating your video...</p>
+              <p className="text-sm text-gray-500 mt-2">
+                Zeroscope is generating your video (this may take 2-5 minutes)
+              </p>
             </div>
           )}
 
@@ -144,9 +179,10 @@ export const VideoCreate = () => {
               <div className="flex space-x-2">
                 <button
                   onClick={() => window.open(generatedVideo, "_blank")}
-                  className="flex-1 bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+                  className="flex-1 bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 flex items-center justify-center gap-2"
                 >
-                  Download
+                  <Download className="w-4 h-4" />
+                  Download Video
                 </button>
                 <button
                   onClick={() => {
@@ -160,12 +196,22 @@ export const VideoCreate = () => {
               </div>
             </div>
           ) : null}
+
           {!isLoading && !generatedVideo && !error && (
             <div className="text-center p-12 text-gray-400">
               <Sparkles className="w-12 h-12 mx-auto mb-3" />
-              <p>Your generated video goes here.</p>
+              <p>Your generated video will appear here.</p>
+              <p className="text-sm mt-2">Powered by Zeroscope v2</p>
             </div>
           )}
+        </div>
+
+        <div className="mt-6 p-4 bg-gray-50 rounded-lg text-sm text-gray-600">
+          <h3 className="font-semibold mb-2">About Zeroscope v2</h3>
+          <p>
+            This uses Zeroscope v2, a text-to-video model that generates
+            24-frame videos. Video generation may take 2-5 minutes.
+          </p>
         </div>
       </div>
     </div>
