@@ -484,8 +484,18 @@ export const ArticleCreate = () => {
             <div className="text-center p-12 text-gray-400">
               <Sparkles className="w-12 h-12 mx-auto mb-3" />
               <p>Your generated article goes here.</p>
+              <p className="text-sm mt-2">Powered by Gemini 2.5 Flash</p>
             </div>
           )}
+        </div>
+
+        <div className="mt-6 p-4 bg-gray-50 rounded-lg text-sm text-gray-600">
+          <h3 className="font-semibold mb-2">About Gemini 2.5 Flash</h3>
+          <p>
+            Gemini 2.5 Flash is Google's fastest and most efficient AI model for
+            text generation, delivering high-quality article content with rapid
+            response times and excellent language understanding.
+          </p>
         </div>
       </div>
     </div>
